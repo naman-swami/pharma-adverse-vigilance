@@ -1,0 +1,28 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Extract clinical symptoms from patient reports and assign MedDRA preferred
+  term dictionary codes.
+input_schema:
+  additionalProperties: false
+  properties:
+    clinical_narrative:
+      type: string
+  required:
+  - clinical_narrative
+  type: object
+name: map-narrative-to-meddra
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object

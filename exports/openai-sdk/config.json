@@ -1,0 +1,28 @@
+{
+  "name": "pharma-adverse-vigilance",
+  "instructions": "You are pharma-adverse-vigilance. Detect disproportionate reporting signals in post-market clinical trial and FAERS reporting streams to protect patient safety.",
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "compute-prr-ebgm-signal",
+        "description": "Calculate statistical disproportionality metrics comparing observed vs expected event frequencies."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "map-narrative-to-meddra",
+        "description": "Extract clinical symptoms from patient reports and assign MedDRA preferred term dictionary codes."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "generate-medwatch-submission",
+        "description": "Synthesize validated case data into compliant FDA 3500A safety XML and PDF bundles."
+      }
+    }
+  ]
+}
