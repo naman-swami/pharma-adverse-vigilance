@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "map-narrative-to-meddra",
+  "description": "Extract clinical symptoms from patient reports and assign MedDRA preferred term dictionary codes.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "clinical_narrative": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "clinical_narrative"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: pharma-adverse-vigilance
+version: "0.1.0"
+description: "Pharmacovigilance signal detection agent synthesizing post-market clinical surveillance, drug-drug interaction alerts, and automated MedWatch 3500A reports."
+model:
+  preferred: llama-3.3-70b-versatile
