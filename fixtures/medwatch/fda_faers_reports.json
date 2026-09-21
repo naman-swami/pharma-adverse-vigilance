@@ -1,0 +1,18 @@
+[
+  {
+    "drug": "Atorvastatin",
+    "adverse_event": "Rhabdomyolysis",
+    "a": 142,
+    "b": 3200,
+    "c": 85,
+    "d": 45000
+  },
+  {
+    "drug": "Metformin",
+    "adverse_event": "Lactic Acidosis",
+    "a": 65,
+    "b": 4100,
+    "c": 30,
+    "d": 52000
+  }
+]
