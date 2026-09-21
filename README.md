@@ -55,7 +55,7 @@ pharma-adverse-vigilance/
 │   └── ich_e2e_pharmacovigilance.md # Regulatory pharmacovigilance guide
 ├── tests/
 │   └── test_agent.py                # Epidemiological test suite
-├── main.py                          # Drug safety CLI
+├── vigilance.py                          # Drug safety CLI
 └── requirements.txt
 ```
 
@@ -66,5 +66,5 @@ pharma-adverse-vigilance/
 pytest tests/ -v
 
 # Audit sample MedWatch adverse event reports
-python main.py --demo
+python vigilance.py --demo
 ```
