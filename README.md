@@ -1,70 +1,41 @@
-# Pharma Adverse Vigilance & Safety Signal Engine
+# Pharma Adverse Vigilance & Safety Signal Hunter
 
-[![OpenGAP](https://img.shields.io/badge/OpenGAP-0.1.0-blue.svg)](agent.yaml)
-[![Pharma](https://img.shields.io/badge/Domain-Pharmacovigilance_Epidemiology-crimson.svg)](docs/ich_e2e_pharmacovigilance.md)
-[![Standard](https://img.shields.io/badge/Standard-ICH_E2E_FAERS-purple.svg)](docs/ich_e2e_pharmacovigilance.md)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](requirements.txt)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+> **Post-Market Pharmacovigilance & FDA FAERS Disproportionality Mining**  
+> Operationalizing Proportional Reporting Ratios (PRR) and Reporting Odds Ratios (ROR).
 
-A clinical pharmacovigilance and drug safety surveillance engine automating disproportionality signal detection (PRR/ROR) on FDA FAERS MedWatch adverse event registries.
+---
 
-```
-                    ┌─────────────────────────┐
-                    │ FDA MedWatch Case Series│
-                    │ (Drug-Event 2x2 Counts) │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ epidemiology/disproport │
-                    └────────────┬────────────┘
-                                 │
-                 ┌───────────────┴───────────────┐
-                 ▼                               ▼
-      ┌─────────────────────┐         ┌─────────────────────┐
-      │  PRR Calculation    │         │  ROR Odds Ratio     │
-      │  PRR >= 2.0 Signal  │         │ (Statistical Assoc) │
-      └──────────┬──────────┘         └──────────┬──────────┘
-                 │                               │
-                 └───────────────┬───────────────┘
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ Drug Safety Alert Gate  │
-                    │ (SAFETY_COMMUNICATION)  │
-                    └─────────────────────────┘
-```
+### Spontaneous Reporting $2 \times 2$ Contingency Table
 
-## Features
+Disproportionality analysis isolates potential drug-adverse event associations within large spontaneous report databases (FDA FAERS, WHO VigiBase):
 
-- **Evans Disproportionality Signal Detection**: Identifies adverse event associations exceeding PRR $\ge 2.0$.
-- **Reporting Odds Ratio (ROR)**: Computes statistical odds ratios with background control normalizations.
-- **FAERS Registry Benchmarks**: Comes pre-packaged with real-world MedWatch drug-reaction pair series.
+| Surveillance Cohort | Specific Adverse Reaction ($E$) | All Other Adverse Reactions ($\bar{E}$) | Total Reports |
+| :--- | :--- | :--- | :--- |
+| **Suspect Drug ($D$)** | $a$ | $b$ | $a + b$ |
+| **All Other Drugs ($\bar{D}$)** | $c$ | $d$ | $c + d$ |
 
-## Directory Structure
+---
 
-```
-pharma-adverse-vigilance/
-├── agent.yaml                       # OpenGAP 0.1.0 Manifest
-├── EXPLAINABILITY.md                # 7-checkpoint pharmacovigilance provenance
-├── epidemiology/
-│   └── disproportionality_engine.py # PRR & ROR epidemiology engine
-├── fixtures/
-│   └── medwatch/
-│       └── fda_faers_reports.json   # Benchmark MedWatch adverse events
-├── docs/
-│   └── ich_e2e_pharmacovigilance.md # Regulatory pharmacovigilance guide
-├── tests/
-│   └── test_agent.py                # Epidemiological test suite
-├── vigilance.py                          # Drug safety CLI
-└── requirements.txt
-```
+### Evans Signal Detection Criteria
 
-## Quick Start
+A statistical drug safety signal is flagged when all three Evans criteria are met:
+
+1. **Proportional Reporting Ratio ($PRR$)**:
+   $$PRR = \frac{a / (a + b)}{c / (c + d)} \ge 2.0$$
+2. **Chi-Square Statistic with Yates Correction**:
+   $$\chi^2 = \frac{N (|ad - bc| - N/2)^2}{(a + b)(c + d)(a + c)(b + d)} \ge 4.0$$
+3. **Report Frequency Threshold**: $a \ge 3$ verified adverse event cases.
+
+---
+
+### Pharmacovigilance CLI Execution
 
 ```bash
-# Run drug safety tests
-pytest tests/ -v
-
-# Audit sample MedWatch adverse event reports
+# Screen FDA FAERS benchmark safety reports
 python vigilance.py --demo
+
+# Run epidemiological signal detection tests
+pytest tests/ -v
 ```
+
+MedWatch reporting procedures, MedDRA coding standards, and safety escalation policies are detailed in [MEDWATCH_PROTOCOL.md](MEDWATCH_PROTOCOL.md).
